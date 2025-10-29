@@ -1,5 +1,7 @@
 package view;
 
+import java.util.List;
+import lotto.Lotto;
 import lotto.LottoParser;
 import lotto.LottoStore;
 import lotto.PurchasedLotto;
@@ -10,7 +12,7 @@ import writer.Writer;
 public class LottoPurchaseContext {
 
     private final static String PURCHASED_AMOUNT_MESSAGE = "구입금액을 입력해 주세요.";
-    private final static String PURCHASED_COUNT_MESSAGE = "%d개를 구매했습니다.";
+    private final static String PURCHASED_COUNT_MESSAGE = "\n%d개를 구매했습니다.";
 
     private final Reader reader;
     private final Writer writer;
@@ -40,7 +42,7 @@ public class LottoPurchaseContext {
                 ex -> writer.write(ex.getMessage())
         );
         this.purchasedLotto = sell;
-        writer.write(PURCHASED_COUNT_MESSAGE.formatted(sell.values().size()));
+        writer.write(getPurchasedLottoMessage());
     }
 
     public PurchasedLotto getPurchaseLotto() {
@@ -51,6 +53,18 @@ public class LottoPurchaseContext {
         String source = reader.read();
         int amount = lottoParser.sourceToNumber(source);
         return store.sell(amount);
+    }
+
+    private String getPurchasedLottoMessage() {
+        List<Lotto> lottos = purchasedLotto.values();
+
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(PURCHASED_COUNT_MESSAGE.formatted(lottos.size()))
+                .append("\n");
+        for (Lotto lotto : lottos) {
+            stringBuilder.append(lotto.toString()).append("\n");
+        }
+        return stringBuilder.toString();
     }
 
 }
