@@ -37,7 +37,7 @@ public class Lotto {
         numbers = numbers.stream()
                 .distinct()
                 .toList();
-        if (numbers.size() != 6) {
+        if (numbers.size() != LOTTO_COUNT) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_LOTTO_NUMBER);
         }
         boolean exceedRange = numbers.stream().anyMatch(n -> n < MIN_LOTTO_NUMBER || n > MAX_LOTTO_NUMBER);

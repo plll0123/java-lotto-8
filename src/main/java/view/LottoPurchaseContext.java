@@ -13,6 +13,7 @@ public class LottoPurchaseContext {
 
     private final static String PURCHASED_AMOUNT_MESSAGE = "구입금액을 입력해 주세요.";
     private final static String PURCHASED_COUNT_MESSAGE = "\n%d개를 구매했습니다.";
+    private static final String LINE_BREAK = "\n";
 
     private final Reader reader;
     private final Writer writer;
@@ -60,9 +61,9 @@ public class LottoPurchaseContext {
 
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(PURCHASED_COUNT_MESSAGE.formatted(lottos.size()))
-                .append("\n");
+                .append(LINE_BREAK);
         for (Lotto lotto : lottos) {
-            stringBuilder.append(lotto.toString()).append("\n");
+            stringBuilder.append(lotto.toString()).append(LINE_BREAK);
         }
         return stringBuilder.toString();
     }

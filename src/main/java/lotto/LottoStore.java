@@ -6,6 +6,7 @@ import util.ErrorMessage;
 
 public class LottoStore {
 
+    private static final int ZERO = 0;
     private final LottoMachine lottoMachine;
 
     public LottoStore(LottoMachine lottoMachine) {
@@ -13,14 +14,14 @@ public class LottoStore {
     }
 
     public PurchasedLotto sell(int amount) {
-        if (amount < 1000) {
+        if (amount < Lotto.AMOUNT) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_AMOUNT);
         }
-        if (amount % Lotto.AMOUNT != 0) {
+        if (amount % Lotto.AMOUNT != ZERO) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_AMOUNT_UNIT);
         }
         int lottoCount = amount / Lotto.AMOUNT;
-        List<Lotto> lottos = IntStream.range(0, lottoCount)
+        List<Lotto> lottos = IntStream.range(ZERO, lottoCount)
                 .mapToObj(e -> lottoMachine.getLotto())
                 .toList();
         return new PurchasedLotto(lottos);
