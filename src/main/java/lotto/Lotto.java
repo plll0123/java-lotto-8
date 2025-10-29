@@ -20,6 +20,14 @@ public class Lotto {
         this.numbers = numbers;
     }
 
+    public List<Integer> getNumbers() {
+        return numbers;
+    }
+
+    public boolean contains(int number) {
+        return numbers.contains(number);
+    }
+
     @Override
     public String toString() {
         return numbers.toString();
@@ -36,10 +44,6 @@ public class Lotto {
         if (exceedRange) {
             throw new IllegalArgumentException(ErrorMessage.OUT_OF_RANGE);
         }
-    }
-
-    public List<Integer> getNumbers() {
-        return numbers;
     }
 
 }
