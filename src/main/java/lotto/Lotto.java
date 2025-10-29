@@ -30,7 +30,7 @@ public class Lotto {
                 .distinct()
                 .toList();
         if (numbers.size() != 6) {
-            throw new IllegalArgumentException("[ERROR] 로또 번호는 6개여야 합니다.");
+            throw new IllegalArgumentException(ErrorMessage.INVALID_LOTTO_NUMBER);
         }
         boolean exceedRange = numbers.stream().anyMatch(n -> n < MIN_LOTTO_NUMBER || n > MAX_LOTTO_NUMBER);
         if (exceedRange) {

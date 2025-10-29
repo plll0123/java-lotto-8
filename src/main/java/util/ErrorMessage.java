@@ -7,5 +7,6 @@ public class ErrorMessage {
     public static final String INVALID_AMOUNT_UNIT = "[ERROR] 금액은 천원단위여야 합니다.";
     public static final String INVALID_AMOUNT = "[ERROR] 금액은 천원 이상이어야 합니다.";
     public static final String OUT_OF_RANGE = "[ERROR] 로또 번호는 1부터 45까지여야 합니다.";
+    public static final String INVALID_LOTTO_NUMBER = "[ERROR] 로또 번호는 6개여야 합니다.";
 
 }
