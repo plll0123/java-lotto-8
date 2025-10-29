@@ -7,6 +7,7 @@ import reader.ConsoleReader;
 import strategy.RandomNumbersGenerateStrategy;
 import util.RetryTemplate;
 import view.LottoPurchaseContext;
+import view.WinningLottoContext;
 import writer.Writer;
 
 public class ApplicationComponentConfig {
@@ -17,6 +18,15 @@ public class ApplicationComponentConfig {
                 new Writer(),
                 new LottoParser(),
                 new LottoStore(new LottoMachine(new RandomNumbersGenerateStrategy())),
+                new RetryTemplate()
+        );
+    }
+
+    public static WinningLottoContext winningLottoContext() {
+        return new WinningLottoContext(
+                new ConsoleReader(),
+                new Writer(),
+                new LottoParser(),
                 new RetryTemplate()
         );
     }
