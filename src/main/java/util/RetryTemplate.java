@@ -9,10 +9,14 @@ public class RetryTemplate {
         while (true) {
             try {
                 return supplier.get();
+            } catch (InputSourceError ex) {
+                System.out.println(ex.getMessage());
+                throw ex;
             } catch (Exception cause) {
                 onErrorAction.accept(cause);
             }
         }
     }
+
 
 }
