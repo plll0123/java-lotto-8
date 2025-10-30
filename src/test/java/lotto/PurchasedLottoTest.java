@@ -24,4 +24,17 @@ class PurchasedLottoTest {
                 .containsEntry(Prize.FIRST, 1L);
     }
 
+    @Test
+    void toString은_배열을_줄바꿈하여_출력한다() {
+        PurchasedLotto purchasedLotto = new PurchasedLotto(List.of(
+                new Lotto(1, 2, 3, 4, 5, 6),
+                new Lotto(11, 12, 13, 14, 15, 16)
+        ));
+        assertThat(purchasedLotto.toString()).isEqualTo("""
+                [1, 2, 3, 4, 5, 6]
+                [11, 12, 13, 14, 15, 16]
+                """.stripTrailing()
+        );
+    }
+
 }

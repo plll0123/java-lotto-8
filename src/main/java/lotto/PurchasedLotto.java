@@ -19,4 +19,19 @@ public record PurchasedLotto(
                 .collect(Collectors.groupingBy(e -> e, Collectors.counting()));
     }
 
+    public int totalAmount() {
+        return values.size() * Lotto.AMOUNT;
+    }
+
+    public int count() {
+        return values.size();
+    }
+
+    @Override
+    public String toString() {
+        return values.stream()
+                .map(Lotto::toString)
+                .collect(Collectors.joining("\n"));
+    }
+
 }
