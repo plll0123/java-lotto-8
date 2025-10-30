@@ -4,7 +4,7 @@ import lotto.LottoMachine;
 import util.Converter;
 import lotto.LottoStore;
 import reader.ConsoleReader;
-import strategy.RandomNumbersGenerateStrategy;
+import lotto.strategy.RandomNumbersGenerateStrategy;
 import util.RetryTemplate;
 import view.LottoPurchaseContext;
 import view.LottoResultContext;

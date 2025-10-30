@@ -1,6 +1,6 @@
 package lotto;
 
-import strategy.NumberStrategy;
+import lotto.strategy.NumberStrategy;
 
 public class LottoMachine {
 

@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import strategy.RandomNumbersGenerateStrategy;
+import lotto.strategy.RandomNumbersGenerateStrategy;
 import util.ErrorMessage;
 
 class LottoStoreTest {

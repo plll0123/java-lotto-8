@@ -1,9 +1,10 @@
-package strategy;
+package lotto.strategy;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.stream.IntStream;
 import lotto.Lotto;
+import lotto.strategy.RandomNumbersGenerateStrategy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
