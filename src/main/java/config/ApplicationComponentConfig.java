@@ -1,7 +1,7 @@
 package config;
 
 import lotto.LottoMachine;
-import lotto.Converter;
+import util.Converter;
 import lotto.LottoStore;
 import reader.ConsoleReader;
 import strategy.RandomNumbersGenerateStrategy;

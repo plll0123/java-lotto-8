@@ -2,7 +2,7 @@ package view;
 
 import java.util.List;
 import lotto.Lotto;
-import lotto.Converter;
+import util.Converter;
 import reader.Reader;
 import util.ErrorMessage;
 import util.RetryTemplate;

@@ -1,8 +1,7 @@
-package lotto;
+package util;
 
 import java.util.Arrays;
 import java.util.List;
-import util.ErrorMessage;
 
 public class Converter {
 

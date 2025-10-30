@@ -1,7 +1,7 @@
 package view;
 
 import java.util.function.Function;
-import lotto.Converter;
+import util.Converter;
 import lotto.LottoStore;
 import lotto.PurchasedLotto;
 import reader.Reader;
