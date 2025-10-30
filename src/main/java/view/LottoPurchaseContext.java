@@ -1,7 +1,6 @@
 package view;
 
-import java.util.List;
-import lotto.Lotto;
+import java.util.function.Function;
 import lotto.LottoParser;
 import lotto.LottoStore;
 import lotto.PurchasedLotto;
@@ -20,7 +19,6 @@ public class LottoPurchaseContext {
     private final LottoParser lottoParser;
     private final LottoStore store;
     private final RetryTemplate retryTemplate;
-    private PurchasedLotto purchasedLotto;
 
     public LottoPurchaseContext(
             Reader reader,
@@ -37,33 +35,21 @@ public class LottoPurchaseContext {
     }
 
     public PurchasedLotto execute() {
-        this.purchasedLotto = retryTemplate.execute(
+        return doExecute(store::sell);
+    }
+
+    private PurchasedLotto doExecute(Function<Integer, PurchasedLotto> function) {
+        PurchasedLotto purchasedLotto = retryTemplate.execute(
                 () -> {
                     writer.write(PURCHASED_AMOUNT_MESSAGE);
-                    return this.getLotto();
+                    String source = reader.read();
+                    int amount = lottoParser.sourceToNumber(source);
+                    return function.apply(amount);
                 },
                 ex -> writer.write(ex.getMessage() + LINE_BREAK)
         );
-        writer.write(getPurchasedLottoMessage());
+        writer.write(PURCHASED_COUNT_MESSAGE.formatted(purchasedLotto.count()) + LINE_BREAK + purchasedLotto);
         return purchasedLotto;
-    }
-
-    private PurchasedLotto getLotto() {
-        String source = reader.read();
-        int amount = lottoParser.sourceToNumber(source);
-        return store.sell(amount);
-    }
-
-    private String getPurchasedLottoMessage() {
-        List<Lotto> lottos = purchasedLotto.values();
-
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(PURCHASED_COUNT_MESSAGE.formatted(lottos.size()))
-                .append(LINE_BREAK);
-        for (Lotto lotto : lottos) {
-            stringBuilder.append(lotto.toString()).append(LINE_BREAK);
-        }
-        return stringBuilder.toString();
     }
 
 }

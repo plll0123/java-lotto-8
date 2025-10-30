@@ -1,20 +1,18 @@
 package view;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.in;
+import static org.assertj.core.api.InstanceOfAssertFactories.list;
 
 import camp.nextstep.edu.missionutils.test.NsTest;
 import config.ApplicationComponentConfig;
 import java.util.List;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 import lotto.Lotto;
 import lotto.PurchasedLotto;
 import org.junit.jupiter.api.Test;
 
 class LottoPurchaseContextTest extends NsTest {
 
-    private LottoPurchaseContext lottoPurchaseContext = ApplicationComponentConfig.lottoPurchaseContext();
+    private final LottoPurchaseContext lottoPurchaseContext = ApplicationComponentConfig.lottoPurchaseContext();
 
     @Test
     void 로또_구메_기능_테스트() {
@@ -23,19 +21,19 @@ class LottoPurchaseContextTest extends NsTest {
         run(String.valueOf(totalAmount));
 
         PurchasedLotto result = lottoPurchaseContext.execute();
-        List<Lotto> lottos = result.values();
-        assertThat(lottos).hasSize(expectLottoCount);
-        lottos.forEach(it -> assertThat(it.getNumbers())
-                .doesNotHaveDuplicates()
-                .hasSize(Lotto.LOTTO_COUNT));
 
-        String resultToFlatString = lottos.stream()
-                .map(Lotto::toString)
-                .collect(Collectors.joining("\n"));
-
+        assertThat(result)
+                .as("구매된 로또의 수는 %s장이어야 한다", expectLottoCount)
+                .matches(e -> e.count() == expectLottoCount)
+                .extracting(PurchasedLotto::values)
+                .asInstanceOf(list(Lotto.class))
+                .as("로또는 중복 번호 없는 6개의 숫자로 이뤄져야한다.")
+                .allSatisfy(lotto -> assertThat(lotto.getNumbers())
+                        .hasSize(Lotto.LOTTO_COUNT)
+                        .doesNotHaveDuplicates());
         assertThat(output()).contains(
                 "구입금액을 입력해 주세요.",
-                "\n%d개를 구매했습니다.\n".formatted(lottos.size()) + resultToFlatString
+                "\n%d개를 구매했습니다.\n".formatted(result.count()) + result
         );
     }
 
@@ -46,6 +44,7 @@ class LottoPurchaseContextTest extends NsTest {
 
         List<String> invalidArguments = List.of("1001", "999", ",", String.valueOf(totalAmount));
         run(invalidArguments.toArray(String[]::new));
+
         lottoPurchaseContext.execute();
 
         assertThat(output()).contains(
@@ -54,10 +53,9 @@ class LottoPurchaseContextTest extends NsTest {
                 "[ERROR] 숫자를 입력해주세요.",
                 "%d개를 구매했습니다.".formatted(expectLottoCount)
         );
-        long count = Pattern.compile("구입금액을 입력해 주세요.").matcher(output())
-                .results()
-                .count();
-        assertThat(count).isEqualTo(invalidArguments.size());
+        assertThat(output().split("구입금액을 입력해 주세요\\.", -1).length - 1)
+                .as("구매 금액 출력 메세지는 잘못된 구매 금액의 입력 수만큼 존재해야 합니다.")
+                .isEqualTo(invalidArguments.size());
     }
 
     @Override
