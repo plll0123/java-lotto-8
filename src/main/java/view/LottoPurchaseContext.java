@@ -36,17 +36,15 @@ public class LottoPurchaseContext {
         this.retryTemplate = retryTemplate;
     }
 
-    public void execute() {
-        writer.write(PURCHASED_AMOUNT_MESSAGE);
-        PurchasedLotto sell = retryTemplate.execute(
-                this::getLotto,
-                ex -> writer.write(ex.getMessage())
+    public PurchasedLotto execute() {
+        this.purchasedLotto = retryTemplate.execute(
+                () -> {
+                    writer.write(PURCHASED_AMOUNT_MESSAGE);
+                    return this.getLotto();
+                },
+                ex -> writer.write(ex.getMessage() + LINE_BREAK)
         );
-        this.purchasedLotto = sell;
         writer.write(getPurchasedLottoMessage());
-    }
-
-    public PurchasedLotto getPurchaseLotto() {
         return purchasedLotto;
     }
 
