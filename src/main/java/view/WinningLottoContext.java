@@ -2,7 +2,7 @@ package view;
 
 import java.util.List;
 import lotto.Lotto;
-import lotto.LottoParser;
+import lotto.Converter;
 import reader.Reader;
 import util.ErrorMessage;
 import util.RetryTemplate;
@@ -15,16 +15,16 @@ public class WinningLottoContext {
 
     private final Reader reader;
     private final Writer writer;
-    private final LottoParser lottoParser;
+    private final Converter converter;
     private final RetryTemplate retryTemplate;
 
     private Lotto winningLotto;
     private int bonusNumber;
 
-    public WinningLottoContext(Reader reader, Writer writer, LottoParser lottoParser, RetryTemplate retryTemplate) {
+    public WinningLottoContext(Reader reader, Writer writer, Converter converter, RetryTemplate retryTemplate) {
         this.reader = reader;
         this.writer = writer;
-        this.lottoParser = lottoParser;
+        this.converter = converter;
         this.retryTemplate = retryTemplate;
     }
 
@@ -46,7 +46,7 @@ public class WinningLottoContext {
             writer.write(WINNING_LOTTO_MESSAGE);
 
             String source = reader.read();
-            List<Integer> winningNumbers = lottoParser.sourceToNumbers(source);
+            List<Integer> winningNumbers = converter.stringToIntegers(source);
             this.winningLotto = new Lotto(winningNumbers);
 
             return null;
@@ -58,7 +58,7 @@ public class WinningLottoContext {
             writer.write(BONUS_LOTTO_NUMBEr_MESSAGE);
 
             String bonusNumberSource = reader.read();
-            int bonusNumber = lottoParser.sourceToNumber(bonusNumberSource);
+            int bonusNumber = converter.stringToInteger(bonusNumberSource);
             if (winningLotto.contains(bonusNumber)) {
                 throw new IllegalArgumentException(ErrorMessage.BONUS_NUMBER_DUPLICATE);
             }

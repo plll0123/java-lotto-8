@@ -1,7 +1,7 @@
 package config;
 
 import lotto.LottoMachine;
-import lotto.LottoParser;
+import lotto.Converter;
 import lotto.LottoStore;
 import reader.ConsoleReader;
 import strategy.RandomNumbersGenerateStrategy;
@@ -17,7 +17,7 @@ public class ApplicationComponentConfig {
         return new LottoPurchaseContext(
                 new ConsoleReader(),
                 new Writer(),
-                new LottoParser(),
+                new Converter(),
                 new LottoStore(new LottoMachine(new RandomNumbersGenerateStrategy())),
                 new RetryTemplate()
         );
@@ -27,7 +27,7 @@ public class ApplicationComponentConfig {
         return new WinningLottoContext(
                 new ConsoleReader(),
                 new Writer(),
-                new LottoParser(),
+                new Converter(),
                 new RetryTemplate()
         );
     }

@@ -1,7 +1,7 @@
 package view;
 
 import java.util.function.Function;
-import lotto.LottoParser;
+import lotto.Converter;
 import lotto.LottoStore;
 import lotto.PurchasedLotto;
 import reader.Reader;
@@ -16,20 +16,20 @@ public class LottoPurchaseContext {
 
     private final Reader reader;
     private final Writer writer;
-    private final LottoParser lottoParser;
+    private final Converter converter;
     private final LottoStore store;
     private final RetryTemplate retryTemplate;
 
     public LottoPurchaseContext(
             Reader reader,
             Writer writer,
-            LottoParser lottoParser,
+            Converter converter,
             LottoStore store,
             RetryTemplate retryTemplate
     ) {
         this.reader = reader;
         this.writer = writer;
-        this.lottoParser = lottoParser;
+        this.converter = converter;
         this.store = store;
         this.retryTemplate = retryTemplate;
     }
@@ -43,7 +43,7 @@ public class LottoPurchaseContext {
                 () -> {
                     writer.write(PURCHASED_AMOUNT_MESSAGE);
                     String source = reader.read();
-                    int amount = lottoParser.sourceToNumber(source);
+                    int amount = converter.stringToInteger(source);
                     return function.apply(amount);
                 },
                 ex -> writer.write(ex.getMessage() + LINE_BREAK)

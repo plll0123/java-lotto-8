@@ -4,11 +4,11 @@ import java.util.Arrays;
 import java.util.List;
 import util.ErrorMessage;
 
-public class LottoParser {
+public class Converter {
 
     public static final String DELIMITER = ",";
 
-    public int sourceToNumber(String source) {
+    public int stringToInteger(String source) {
         try {
             return Integer.parseInt(source.trim());
         } catch (NumberFormatException e) {
@@ -16,9 +16,9 @@ public class LottoParser {
         }
     }
 
-    public List<Integer> sourceToNumbers(String source) {
+    public List<Integer> stringToIntegers(String source) {
         return Arrays.stream(source.split(DELIMITER))
-                .map(this::sourceToNumber)
+                .map(this::stringToInteger)
                 .toList();
     }
 
