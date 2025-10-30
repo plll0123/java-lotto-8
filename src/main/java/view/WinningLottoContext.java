@@ -10,7 +10,7 @@ import writer.Writer;
 
 public class WinningLottoContext {
 
-    private static final String WINNING_LOTTO_MESSAGE = "\n당첨 번호를 입력해주세요.";
+    private static final String WINNING_LOTTO_MESSAGE = "당첨 번호를 입력해주세요.";
     private static final String BONUS_LOTTO_NUMBEr_MESSAGE = "\n보너스 번호를 입력해주세요.";
 
     private final Reader reader;
