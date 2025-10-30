@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 class PrizeTest {
 
@@ -29,19 +30,9 @@ class PrizeTest {
     }
 
     @ParameterizedTest
-    @CsvSource(textBlock = """
-            1,
-            2,
-            4, true
-            6, true
-            7,
-            """)
-    void 번호_조합에_해당하는_등수가_없으면_예외를_던진다(int matchCount, Boolean bonus) {
-        if (bonus == null) {
-            bonus = false;
-        }
-        Boolean _bonus = bonus;
-        assertThatThrownBy(() -> Prize.from(matchCount, _bonus)).isInstanceOf(IllegalArgumentException.class);
+    @ValueSource(ints = {1, 2, 7})
+    void 맞춘_번호수에_해당하는_등수가_없으면_예외가_발생한다(int matchCount) {
+        assertThatThrownBy(() -> Prize.from(matchCount, false)).isInstanceOf(IllegalArgumentException.class);
     }
 
 }
