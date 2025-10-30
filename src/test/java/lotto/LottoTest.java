@@ -30,4 +30,14 @@ class LottoTest {
         assertThat(Lotto.LOTTO_COUNT).isEqualTo(6);
     }
 
+    @Test
+    void 로또_번호_조회() {
+        Lotto lotto = new Lotto(List.of(1, 2, 3, 4, 5, 6));
+        assertThat(lotto.matchesCount(new Lotto(1, 2, 3, 8, 9, 10))).isEqualTo(3);
+        assertThat(lotto.matchesCount(new Lotto(1, 11, 12, 13, 14, 15))).isEqualTo(1);
+
+        assertThat(lotto.contains(1)).isTrue();
+        assertThat(lotto.contains(7)).isFalse();
+    }
+
 }

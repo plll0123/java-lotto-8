@@ -1,6 +1,9 @@
 package lotto;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import util.ErrorMessage;
 
 public class Lotto {
@@ -15,6 +18,10 @@ public class Lotto {
 
     private final List<Integer> numbers;
 
+    public Lotto(int... numbers) {
+        this(Arrays.stream(numbers).boxed().toList());
+    }
+
     public Lotto(List<Integer> numbers) {
         validate(numbers);
         this.numbers = numbers;
@@ -26,6 +33,13 @@ public class Lotto {
 
     public boolean contains(int number) {
         return numbers.contains(number);
+    }
+
+    public int matchesCount(Lotto other) {
+        Set<Integer> otherLottoNumbers = new HashSet<>(other.getNumbers());
+        return (int) numbers.stream()
+                .filter(otherLottoNumbers::contains)
+                .count();
     }
 
     @Override
