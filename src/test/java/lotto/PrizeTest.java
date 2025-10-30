@@ -43,4 +43,5 @@ class PrizeTest {
         Boolean _bonus = bonus;
         assertThatThrownBy(() -> Prize.from(matchCount, _bonus)).isInstanceOf(IllegalArgumentException.class);
     }
+
 }
