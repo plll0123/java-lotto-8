@@ -2,6 +2,7 @@ package lotto;
 
 import config.ApplicationComponentConfig;
 import util.InputSourceError;
+import view.LottoService;
 
 public class Application {
 

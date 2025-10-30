@@ -1,8 +1,7 @@
-package lotto;
+package view;
 
-import view.LottoPurchaseContext;
-import view.LottoResultContext;
-import view.WinningLottoContext;
+import lotto.Lotto;
+import lotto.PurchasedLotto;
 
 public class LottoService {
 
