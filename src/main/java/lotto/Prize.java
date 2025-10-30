@@ -39,7 +39,12 @@ public enum Prize {
     public static Prize from(int matchCount, boolean bonus) {
         return PRIZES.stream()
                 .filter(e -> e.matchCount == matchCount)
-                .filter(e -> e.needBonus == bonus)
+                .map(e -> {
+                    if (e.matchCount == 5 && bonus) {
+                        return SECOND;
+                    }
+                    return e;
+                })
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException(ErrorMessage.PRIZE_NOT_EXIST));
     }
