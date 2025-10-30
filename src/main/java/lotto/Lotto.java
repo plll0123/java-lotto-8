@@ -48,9 +48,13 @@ public class Lotto {
     }
 
     private void validate(List<Integer> numbers) {
-        numbers = numbers.stream()
+        int distinctSize = numbers.stream()
                 .distinct()
-                .toList();
+                .toList()
+                .size();
+        if (distinctSize != numbers.size()) {
+            throw new IllegalArgumentException(ErrorMessage.LOTTO_NUMBER_DUPLICATE);
+        }
         if (numbers.size() != LOTTO_COUNT) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_LOTTO_NUMBER);
         }
