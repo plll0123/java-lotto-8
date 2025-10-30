@@ -10,11 +10,11 @@ class PrizeTest {
 
     @ParameterizedTest
     @CsvSource(textBlock = """
-            FIFTH| 3| false| 3개 일치 (5,000)원| 5_000
-            FOURTH| 4| false| 4개 일치 (50,000)원| 50_000
-            THIRD| 5| false| 5개 일치 (1,500,000)원| 1_500_000
-            SECOND| 5| true| 5개 일치, 보너스 볼 일치 (30,000,000)원| 30_000_000
-            FIRST| 6| false| 6개 일치 (2,000,000,000)원| 2_000_000_000
+            FIFTH| 3| false| 3개 일치 (5,000원)| 5_000
+            FOURTH| 4| false| 4개 일치 (50,000원)| 50_000
+            THIRD| 5| false| 5개 일치 (1,500,000원)| 1_500_000
+            SECOND| 5| true| 5개 일치, 보너스 볼 일치 (30,000,000원)| 30_000_000
+            FIRST| 6| false| 6개 일치 (2,000,000,000원)| 2_000_000_000
             """, delimiter = '|')
     void 등수별_속성_검사(
             Prize prize,

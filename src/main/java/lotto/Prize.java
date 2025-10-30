@@ -61,7 +61,7 @@ public enum Prize {
     }
 
     private static class Constants {
-        private static final String MATCH_INFORMATION_FORMAT = "%d개 일치%s (%,d)원";
+        private static final String MATCH_INFORMATION_FORMAT = "%d개 일치%s (%,d원)";
         private static final String BONUS_ADDITIONAL_MESSAGE = ", 보너스 볼 일치";
     }
 
