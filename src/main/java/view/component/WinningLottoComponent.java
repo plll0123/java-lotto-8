@@ -1,4 +1,4 @@
-package view;
+package view.component;
 
 import java.util.List;
 import lotto.Lotto;
@@ -9,7 +9,7 @@ import util.ErrorMessage;
 import util.RetryTemplate;
 import writer.Writer;
 
-public class WinningLottoContext {
+public class WinningLottoComponent {
 
     private static final String WINNING_LOTTO_MESSAGE = "당첨 번호를 입력해주세요.";
     private static final String BONUS_LOTTO_NUMBEr_MESSAGE = "\n보너스 번호를 입력해주세요.";
@@ -19,7 +19,7 @@ public class WinningLottoContext {
     private final Converter converter;
     private final RetryTemplate retryTemplate;
 
-    public WinningLottoContext(Reader reader, Writer writer, Converter converter, RetryTemplate retryTemplate) {
+    public WinningLottoComponent(Reader reader, Writer writer, Converter converter, RetryTemplate retryTemplate) {
         this.reader = reader;
         this.writer = writer;
         this.converter = converter;

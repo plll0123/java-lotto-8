@@ -1,4 +1,4 @@
-package view;
+package view.component;
 
 import java.util.function.Function;
 import util.Converter;
@@ -8,7 +8,7 @@ import reader.Reader;
 import util.RetryTemplate;
 import writer.Writer;
 
-public class LottoPurchaseContext {
+public class LottoPurchaseComponent {
 
     private final static String PURCHASED_AMOUNT_MESSAGE = "구입금액을 입력해 주세요.";
     private final static String PURCHASED_COUNT_MESSAGE = "\n%d개를 구매했습니다.";
@@ -20,7 +20,7 @@ public class LottoPurchaseContext {
     private final LottoStore store;
     private final RetryTemplate retryTemplate;
 
-    public LottoPurchaseContext(
+    public LottoPurchaseComponent(
             Reader reader,
             Writer writer,
             Converter converter,

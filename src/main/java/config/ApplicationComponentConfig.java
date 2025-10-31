@@ -6,15 +6,15 @@ import lotto.LottoStore;
 import reader.ConsoleReader;
 import lotto.strategy.RandomNumbersGenerateStrategy;
 import util.RetryTemplate;
-import view.LottoPurchaseContext;
-import view.LottoResultContext;
-import view.WinningLottoContext;
+import view.component.LottoPurchaseComponent;
+import view.component.LottoResultComponent;
+import view.component.WinningLottoComponent;
 import writer.Writer;
 
 public class ApplicationComponentConfig {
 
-    public static LottoPurchaseContext lottoPurchaseContext() {
-        return new LottoPurchaseContext(
+    public static LottoPurchaseComponent lottoPurchaseContext() {
+        return new LottoPurchaseComponent(
                 new ConsoleReader(),
                 new Writer(),
                 new Converter(),
@@ -23,8 +23,8 @@ public class ApplicationComponentConfig {
         );
     }
 
-    public static WinningLottoContext winningLottoContext() {
-        return new WinningLottoContext(
+    public static WinningLottoComponent winningLottoContext() {
+        return new WinningLottoComponent(
                 new ConsoleReader(),
                 new Writer(),
                 new Converter(),
@@ -32,8 +32,8 @@ public class ApplicationComponentConfig {
         );
     }
 
-    public static LottoResultContext lottoResultContext() {
-        return new LottoResultContext(
+    public static LottoResultComponent lottoResultContext() {
+        return new LottoResultComponent(
                 new Writer()
         );
     }

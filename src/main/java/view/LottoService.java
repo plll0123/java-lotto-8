@@ -2,27 +2,30 @@ package view;
 
 import lotto.PurchasedLotto;
 import lotto.WinningLotto;
+import view.component.LottoPurchaseComponent;
+import view.component.LottoResultComponent;
+import view.component.WinningLottoComponent;
 
 public class LottoService {
 
-    private final LottoPurchaseContext lottoPurchaseContext;
-    private final WinningLottoContext winningLottoContext;
-    private final LottoResultContext lottoResultContext;
+    private final LottoPurchaseComponent lottoPurchaseComponent;
+    private final WinningLottoComponent winningLottoComponent;
+    private final LottoResultComponent lottoResultComponent;
 
     public LottoService(
-            LottoPurchaseContext lottoPurchaseContext,
-            WinningLottoContext winningLottoContext,
-            LottoResultContext lottoResultContext
+            LottoPurchaseComponent lottoPurchaseComponent,
+            WinningLottoComponent winningLottoComponent,
+            LottoResultComponent lottoResultComponent
     ) {
-        this.lottoPurchaseContext = lottoPurchaseContext;
-        this.winningLottoContext = winningLottoContext;
-        this.lottoResultContext = lottoResultContext;
+        this.lottoPurchaseComponent = lottoPurchaseComponent;
+        this.winningLottoComponent = winningLottoComponent;
+        this.lottoResultComponent = lottoResultComponent;
     }
 
     public void service() {
-        PurchasedLotto purchasedLotto = lottoPurchaseContext.execute();
-        WinningLotto winningLotto = winningLottoContext.execute();
-        lottoResultContext.execute(winningLotto, purchasedLotto);
+        PurchasedLotto purchasedLotto = lottoPurchaseComponent.execute();
+        WinningLotto winningLotto = winningLottoComponent.execute();
+        lottoResultComponent.execute(winningLotto, purchasedLotto);
     }
 
 }

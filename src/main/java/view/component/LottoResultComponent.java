@@ -1,4 +1,4 @@
-package view;
+package view.component;
 
 import java.util.Map;
 import java.util.Map.Entry;
@@ -8,7 +8,7 @@ import lotto.PurchasedLotto;
 import lotto.WinningLotto;
 import writer.Writer;
 
-public class LottoResultContext {
+public class LottoResultComponent {
 
     private static final String MATCH_MESSAGE_PREFIX = """
             
@@ -21,7 +21,7 @@ public class LottoResultContext {
 
     private final Writer writer;
 
-    public LottoResultContext(Writer writer) {
+    public LottoResultComponent(Writer writer) {
         this.writer = writer;
     }
 
@@ -35,7 +35,7 @@ public class LottoResultContext {
     protected final double getRoi(PurchasedLotto purchasedLotto, Map<Prize, Long> lottoResult) {
         long sum = lottoResult.entrySet()
                 .stream()
-                .mapToLong(LottoResultContext::calculatePrizeForRank)
+                .mapToLong(LottoResultComponent::calculatePrizeForRank)
                 .sum();
         double hundred = 100.0;
         double roi = (double) sum / purchasedLotto.totalAmount() * hundred;

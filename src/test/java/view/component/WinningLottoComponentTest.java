@@ -1,4 +1,4 @@
-package view;
+package view.component;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -11,9 +11,9 @@ import lotto.Lotto;
 import lotto.WinningLotto;
 import org.junit.jupiter.api.Test;
 
-class WinningLottoContextTest extends NsTest {
+class WinningLottoComponentTest extends NsTest {
 
-    private final WinningLottoContext winningLottoContext = ApplicationComponentConfig.winningLottoContext();
+    private final WinningLottoComponent winningLottoComponent = ApplicationComponentConfig.winningLottoContext();
 
     @Test
     void 당첨_로또_뷰_문자열_테스트() {
@@ -21,7 +21,7 @@ class WinningLottoContextTest extends NsTest {
         String bonusNumber = "7";
         run(lottoNumbers, bonusNumber);
 
-        WinningLotto winningLotto = winningLottoContext.execute();
+        WinningLotto winningLotto = winningLottoComponent.execute();
 
         assertThat(output()).contains(
                 "당첨 번호를 입력해주세요.",
@@ -43,7 +43,7 @@ class WinningLottoContextTest extends NsTest {
 
         run(lottoNumbers, invalidBonusNumber, bonusNumber);
 
-        WinningLotto winningLotto = winningLottoContext.execute();
+        WinningLotto winningLotto = winningLottoComponent.execute();
 
         assertThat(output())
                 .contains("[ERROR] 보너스 번호는 당첨 번호와 중복될 수 없습니다.")

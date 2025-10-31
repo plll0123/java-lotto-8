@@ -1,4 +1,4 @@
-package view;
+package view.component;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.InstanceOfAssertFactories.list;
@@ -10,9 +10,9 @@ import lotto.Lotto;
 import lotto.PurchasedLotto;
 import org.junit.jupiter.api.Test;
 
-class LottoPurchaseContextTest extends NsTest {
+class LottoPurchaseComponentTest extends NsTest {
 
-    private final LottoPurchaseContext lottoPurchaseContext = ApplicationComponentConfig.lottoPurchaseContext();
+    private final LottoPurchaseComponent lottoPurchaseComponent = ApplicationComponentConfig.lottoPurchaseContext();
 
     @Test
     void 로또_구메_기능_테스트() {
@@ -20,7 +20,7 @@ class LottoPurchaseContextTest extends NsTest {
         int totalAmount = Lotto.AMOUNT * expectLottoCount;
         run(String.valueOf(totalAmount));
 
-        PurchasedLotto result = lottoPurchaseContext.execute();
+        PurchasedLotto result = lottoPurchaseComponent.execute();
 
         assertThat(result)
                 .as("구매된 로또의 수는 %s장이어야 한다", expectLottoCount)
@@ -45,7 +45,7 @@ class LottoPurchaseContextTest extends NsTest {
         List<String> invalidArguments = List.of("1001", "999", ",", String.valueOf(totalAmount));
         run(invalidArguments.toArray(String[]::new));
 
-        lottoPurchaseContext.execute();
+        lottoPurchaseComponent.execute();
 
         assertThat(output()).contains(
                 "[ERROR] 금액은 천원단위여야 합니다.",
