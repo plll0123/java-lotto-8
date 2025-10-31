@@ -7,6 +7,7 @@ import java.util.Map;
 import lotto.Lotto;
 import lotto.Prize;
 import lotto.PurchasedLotto;
+import lotto.WinningLotto;
 import org.junit.jupiter.api.Test;
 
 class LottoResultContextTest {
@@ -21,10 +22,10 @@ class LottoResultContextTest {
                 new Lotto(1, 2, 3, 4, 5, 6),
                 new Lotto(11, 12, 13, 14, 15, 16)
         ));
-        Map<Prize, Long> winningDetails = purchasedLotto.getWinningDetails(new Lotto(11, 12, 13, 14, 20, 21), 22);
+        Map<Prize, Long> winningDetails = purchasedLotto.getWinningDetails(new WinningLotto(new Lotto(11, 12, 13, 14, 20, 21), 22));
         assertThat(lottoResultContext.getRoi(purchasedLotto, winningDetails)).isEqualTo(1000.0);
 
-        Map<Prize, Long> winningDetails2 = purchasedLotto.getWinningDetails(new Lotto(1, 2, 3, 34, 35, 36), 7);
+        Map<Prize, Long> winningDetails2 = purchasedLotto.getWinningDetails(new WinningLotto(new Lotto(1, 2, 3, 34, 35, 36), 7));
         assertThat(lottoResultContext.getRoi(purchasedLotto, winningDetails2)).isEqualTo(400.0);
     }
 

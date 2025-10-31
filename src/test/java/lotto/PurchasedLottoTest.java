@@ -9,7 +9,7 @@ class PurchasedLottoTest {
 
     @Test
     void 등수별_당첨횟수_구하기() {
-        Lotto winningLotto = new Lotto(1, 2, 3, 4, 5, 6);
+        WinningLotto winningLotto = new WinningLotto(new Lotto(1, 2, 3, 4, 5, 6), 9);
 
         PurchasedLotto purchasedLotto = new PurchasedLotto(List.of(
                 new Lotto(1, 2, 3, 8, 9, 10),
@@ -17,7 +17,7 @@ class PurchasedLottoTest {
                 new Lotto(1, 2, 3, 4, 5, 9),
                 new Lotto(1, 2, 3, 4, 5, 6)
         ));
-        assertThat(purchasedLotto.getWinningDetails(winningLotto, 9))
+        assertThat(purchasedLotto.getWinningDetails(winningLotto))
                 .containsEntry(Prize.FIFTH, 1L)
                 .containsEntry(Prize.THIRD, 1L)
                 .containsEntry(Prize.SECOND, 1L)

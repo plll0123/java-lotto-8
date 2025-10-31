@@ -22,7 +22,7 @@ public class LottoService {
     public void service() {
         PurchasedLotto purchasedLotto = lottoPurchaseContext.execute();
         WinningLotto winningLotto = winningLottoContext.execute();
-        lottoResultContext.execute(winningLotto.value(), winningLotto.bonusNumber(), purchasedLotto);
+        lottoResultContext.execute(winningLotto, purchasedLotto);
     }
 
 }

@@ -8,13 +8,14 @@ public record PurchasedLotto(
         List<Lotto> values
 ) {
 
-    public Map<Prize, Long> getWinningDetails(Lotto winningLotto, int bonusNumber) {
+    public Map<Prize, Long> getWinningDetails(WinningLotto winningLotto) {
+        Lotto lotto = winningLotto.value();
         return values.stream()
-                .filter(e -> e.matchesCount(winningLotto) >= 3)
+                .filter(e -> e.matchesCount(lotto) >= 3)
                 .map(e -> {
-                    int matchCount = e.matchesCount(winningLotto);
-                    boolean contains = e.contains(bonusNumber);
-                    return Prize.from(matchCount, contains);
+                    int matchCount = e.matchesCount(lotto);
+                    boolean bonusNumberMatches = e.contains(winningLotto.bonusNumber());
+                    return Prize.from(matchCount, bonusNumberMatches);
                 })
                 .collect(Collectors.groupingBy(e -> e, Collectors.counting()));
     }

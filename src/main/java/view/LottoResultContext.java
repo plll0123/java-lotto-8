@@ -1,10 +1,11 @@
 package view;
 
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
-import lotto.Lotto;
 import lotto.Prize;
 import lotto.PurchasedLotto;
+import lotto.WinningLotto;
 import writer.Writer;
 
 public class LottoResultContext {
@@ -17,7 +18,6 @@ public class LottoResultContext {
     private static final String MATCH_MESSAGE = "%s - %d개";
     private static final String ROI_MESSAGE = "총 수익률은 %.1f%%입니다.";
     private static final String LINE_BREAK = "\n";
-    private static final double HUNDRED = 100.0;
 
     private final Writer writer;
 
@@ -25,8 +25,8 @@ public class LottoResultContext {
         this.writer = writer;
     }
 
-    public void execute(Lotto winningLotto, int bonusNumber, PurchasedLotto purchasedLotto) {
-        Map<Prize, Long> lottoResult = purchasedLotto.getWinningDetails(winningLotto, bonusNumber);
+    public void execute(WinningLotto winningLotto, PurchasedLotto purchasedLotto) {
+        Map<Prize, Long> lottoResult = purchasedLotto.getWinningDetails(winningLotto);
         double roi = getRoi(purchasedLotto, lottoResult);
         String prizeResult = getPrizeResult(lottoResult, roi);
         writer.write(MATCH_MESSAGE_PREFIX + prizeResult);
@@ -35,10 +35,15 @@ public class LottoResultContext {
     protected final double getRoi(PurchasedLotto purchasedLotto, Map<Prize, Long> lottoResult) {
         long sum = lottoResult.entrySet()
                 .stream()
-                .mapToLong(e -> e.getKey().getValue() * e.getValue())
+                .mapToLong(LottoResultContext::calculatePrizeForRank)
                 .sum();
-        double roi = (double) sum / (purchasedLotto.values().size() * Lotto.AMOUNT) * HUNDRED;
-        return Math.round(roi * HUNDRED) / HUNDRED;
+        double hundred = 100.0;
+        double roi = (double) sum / purchasedLotto.totalAmount() * hundred;
+        return Math.round(roi * hundred) / hundred;
+    }
+
+    private static long calculatePrizeForRank(Entry<Prize, Long> e) {
+        return e.getKey().getValue() * e.getValue();
     }
 
     protected final String getPrizeResult(Map<Prize, Long> lottoResult, double roi) {
