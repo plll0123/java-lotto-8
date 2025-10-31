@@ -9,13 +9,10 @@ public class RandomNumbersGenerateStrategy implements NumberStrategy {
     @Override
     public List<Integer> getNumbers() {
         return Randoms.pickUniqueNumbersInRange(
-                        Lotto.MIN_LOTTO_NUMBER,
-                        Lotto.MAX_LOTTO_NUMBER,
-                        Lotto.LOTTO_COUNT
-                )
-                .stream()
-                .sorted()
-                .toList();
+                Lotto.MIN_LOTTO_NUMBER,
+                Lotto.MAX_LOTTO_NUMBER,
+                Lotto.LOTTO_COUNT
+        );
     }
 
 }
