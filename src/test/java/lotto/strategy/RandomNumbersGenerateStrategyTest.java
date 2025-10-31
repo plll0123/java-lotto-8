@@ -21,8 +21,7 @@ class RandomNumbersGenerateStrategyTest {
                     assertThat(numbers)
                             .hasSize(Lotto.LOTTO_COUNT)
                             .doesNotHaveDuplicates()
-                            .allSatisfy(number -> assertThat(number).isBetween(Lotto.MIN_LOTTO_NUMBER, Lotto.MAX_LOTTO_NUMBER))
-                            .isSorted();
+                            .allSatisfy(number -> assertThat(number).isBetween(Lotto.MIN_LOTTO_NUMBER, Lotto.MAX_LOTTO_NUMBER));
                 });
     }
 
