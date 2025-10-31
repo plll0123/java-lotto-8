@@ -7,6 +7,8 @@ import config.ApplicationComponentConfig;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
+import lotto.Lotto;
+import lotto.WinningLotto;
 import org.junit.jupiter.api.Test;
 
 class WinningLottoContextTest extends NsTest {
@@ -19,7 +21,7 @@ class WinningLottoContextTest extends NsTest {
         String bonusNumber = "7";
         run(lottoNumbers, bonusNumber);
 
-        winningLottoContext.printWinningLottoNumbers();
+        WinningLotto winningLotto = winningLottoContext.execute();
 
         assertThat(output()).contains(
                 "당첨 번호를 입력해주세요.",
@@ -29,8 +31,8 @@ class WinningLottoContextTest extends NsTest {
         List<Integer> numbers = Arrays.stream(lottoNumbers.split(","))
                 .map(Integer::parseInt)
                 .toList();
-        assertThat(winningLottoContext.getWinningLotto().getNumbers()).isEqualTo(numbers);
-        assertThat(winningLottoContext.getBonusNumber()).isEqualTo(Integer.parseInt(bonusNumber));
+        assertThat(winningLotto.value()).isEqualTo(new Lotto(numbers));
+        assertThat(winningLotto.bonusNumber()).isEqualTo(Integer.parseInt(bonusNumber));
     }
 
     @Test
@@ -41,7 +43,7 @@ class WinningLottoContextTest extends NsTest {
 
         run(lottoNumbers, invalidBonusNumber, bonusNumber);
 
-        winningLottoContext.printWinningLottoNumbers();
+        WinningLotto winningLotto = winningLottoContext.execute();
 
         assertThat(output())
                 .contains("[ERROR] 보너스 번호는 당첨 번호와 중복될 수 없습니다.")
@@ -53,7 +55,7 @@ class WinningLottoContextTest extends NsTest {
                             .isEqualTo(2L);
                 });
 
-        assertThat(winningLottoContext.getBonusNumber())
+        assertThat(winningLotto.bonusNumber())
                 .isNotEqualTo(Integer.parseInt(invalidBonusNumber))
                 .isEqualTo(Integer.parseInt(bonusNumber));
     }

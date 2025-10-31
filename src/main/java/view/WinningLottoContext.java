@@ -2,8 +2,9 @@ package view;
 
 import java.util.List;
 import lotto.Lotto;
-import util.Converter;
+import lotto.WinningLotto;
 import reader.Reader;
+import util.Converter;
 import util.ErrorMessage;
 import util.RetryTemplate;
 import writer.Writer;
@@ -18,9 +19,6 @@ public class WinningLottoContext {
     private final Converter converter;
     private final RetryTemplate retryTemplate;
 
-    private Lotto winningLotto;
-    private int bonusNumber;
-
     public WinningLottoContext(Reader reader, Writer writer, Converter converter, RetryTemplate retryTemplate) {
         this.reader = reader;
         this.writer = writer;
@@ -28,44 +26,38 @@ public class WinningLottoContext {
         this.retryTemplate = retryTemplate;
     }
 
-    public void printWinningLottoNumbers() {
-        getWinningLottoNumbers();
-        getBonusLottoNumber();
+    public WinningLotto execute() {
+        Lotto winningLotto = getWinningLottoNumbers();
+        int bonusNumber = getBonusNumber(winningLotto);
+        return new WinningLotto(winningLotto, bonusNumber);
     }
 
-    public Lotto getWinningLotto() {
-        return winningLotto;
-    }
-
-    public int getBonusNumber() {
-        return bonusNumber;
-    }
-
-    private void getWinningLottoNumbers() {
-        retryTemplate.execute(() -> {
+    private Lotto getWinningLottoNumbers() {
+        return retryTemplate.execute(() -> {
             writer.write(WINNING_LOTTO_MESSAGE);
-
             String source = reader.read();
             List<Integer> winningNumbers = converter.stringToIntegers(source);
-            this.winningLotto = new Lotto(winningNumbers);
-
-            return null;
+            return new Lotto(winningNumbers);
         }, ex -> writer.write(ex.getMessage()));
     }
 
-    private void getBonusLottoNumber() {
-        retryTemplate.execute(() -> {
+    private int getBonusNumber(Lotto winningLotto) {
+        return retryTemplate.execute(() -> {
             writer.write(BONUS_LOTTO_NUMBEr_MESSAGE);
 
             String bonusNumberSource = reader.read();
             int bonusNumber = converter.stringToInteger(bonusNumberSource);
-            if (winningLotto.contains(bonusNumber)) {
-                throw new IllegalArgumentException(ErrorMessage.BONUS_NUMBER_DUPLICATE);
-            }
-            this.bonusNumber = bonusNumber;
 
-            return null;
+            validateBonusNumber(winningLotto, bonusNumber);
+
+            return bonusNumber;
         }, ex -> writer.write(ex.getMessage()));
+    }
+
+    private static void validateBonusNumber(Lotto winningLotto, int bonusNumber) {
+        if (winningLotto.contains(bonusNumber)) {
+            throw new IllegalArgumentException(ErrorMessage.BONUS_NUMBER_DUPLICATE);
+        }
     }
 
 }

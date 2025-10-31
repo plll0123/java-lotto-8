@@ -1,7 +1,7 @@
 package view;
 
-import lotto.Lotto;
 import lotto.PurchasedLotto;
+import lotto.WinningLotto;
 
 public class LottoService {
 
@@ -21,10 +21,8 @@ public class LottoService {
 
     public void service() {
         PurchasedLotto purchasedLotto = lottoPurchaseContext.execute();
-        winningLottoContext.printWinningLottoNumbers();
-        Lotto winningLotto = winningLottoContext.getWinningLotto();
-        int bonusNumber = winningLottoContext.getBonusNumber();
-        lottoResultContext.execute(winningLotto, bonusNumber, purchasedLotto);
+        WinningLotto winningLotto = winningLottoContext.execute();
+        lottoResultContext.execute(winningLotto.value(), winningLotto.bonusNumber(), purchasedLotto);
     }
 
 }
