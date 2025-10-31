@@ -3,6 +3,7 @@ package lotto;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import util.ErrorMessage;
 
@@ -40,6 +41,20 @@ public class Lotto {
         return (int) numbers.stream()
                 .filter(otherLottoNumbers::contains)
                 .count();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Lotto lotto = (Lotto) o;
+        return Objects.equals(numbers, lotto.numbers);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(numbers);
     }
 
     @Override
