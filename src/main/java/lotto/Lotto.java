@@ -63,17 +63,16 @@ public class Lotto {
     }
 
     private void validate(List<Integer> numbers) {
-        int distinctSize = numbers.stream()
-                .distinct()
-                .toList()
-                .size();
-        if (distinctSize != numbers.size()) {
-            throw new IllegalArgumentException(ErrorMessage.LOTTO_NUMBER_DUPLICATE);
-        }
+        numbers.forEach(Lotto::validateRange);
         if (numbers.size() != LOTTO_COUNT) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_LOTTO_NUMBER);
         }
-        numbers.forEach(Lotto::validateRange);
+        long distinctSize = numbers.stream()
+                .distinct()
+                .count();
+        if (distinctSize != LOTTO_COUNT) {
+            throw new IllegalArgumentException(ErrorMessage.LOTTO_NUMBER_DUPLICATE);
+        }
     }
 
     public static void validateRange(int number) {
