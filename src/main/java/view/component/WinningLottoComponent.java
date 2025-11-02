@@ -55,6 +55,7 @@ public class WinningLottoComponent {
     }
 
     private static void validateBonusNumber(Lotto winningLotto, int bonusNumber) {
+        Lotto.validateRange(bonusNumber);
         if (winningLotto.contains(bonusNumber)) {
             throw new IllegalArgumentException(ErrorMessage.BONUS_NUMBER_DUPLICATE);
         }

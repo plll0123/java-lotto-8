@@ -73,8 +73,11 @@ public class Lotto {
         if (numbers.size() != LOTTO_COUNT) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_LOTTO_NUMBER);
         }
-        boolean exceedRange = numbers.stream().anyMatch(n -> n < MIN_LOTTO_NUMBER || n > MAX_LOTTO_NUMBER);
-        if (exceedRange) {
+        numbers.forEach(Lotto::validateRange);
+    }
+
+    public static void validateRange(int number) {
+        if (number < MIN_LOTTO_NUMBER || number > MAX_LOTTO_NUMBER) {
             throw new IllegalArgumentException(ErrorMessage.OUT_OF_RANGE);
         }
     }

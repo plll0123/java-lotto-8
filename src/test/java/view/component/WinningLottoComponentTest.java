@@ -1,6 +1,7 @@
 package view.component;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import camp.nextstep.edu.missionutils.test.NsTest;
 import config.ApplicationComponentConfig;
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 import lotto.Lotto;
 import lotto.WinningLotto;
+import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 import org.junit.jupiter.api.Test;
 
 class WinningLottoComponentTest extends NsTest {
@@ -58,6 +60,17 @@ class WinningLottoComponentTest extends NsTest {
         assertThat(winningLotto.bonusNumber())
                 .isNotEqualTo(Integer.parseInt(invalidBonusNumber))
                 .isEqualTo(Integer.parseInt(bonusNumber));
+    }
+
+    @Test
+    void 보너스_번호의_숫자_범위_검사() {
+        String lottoNumbers = "1,2,3,4,5,6";
+        String invalidBonusNumber = "0";
+        String ignored = "44";
+        run(lottoNumbers, invalidBonusNumber, ignored);
+
+        winningLottoComponent.execute();
+        assertThat(output()).contains("[ERROR] 로또 번호는 1부터 45까지여야 합니다.");
     }
 
     @Override
